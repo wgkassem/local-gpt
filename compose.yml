@@ -1,0 +1,22 @@
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    volumes:
+      - open-webui-data:/app/backend/data
+    restart: unless-stopped
+    ports:
+      - "3000:8080"
+    environment:
+      - OLLAMA_BASE_URL=http://host.containers.internal:11434
+      - WEBUI_PORT=3000
+    networks:
+      - webui-net
+
+networks:
+  webui-net:
+    driver: bridge
+
+volumes:
+  open-webui-data:
+    driver: local
